@@ -1,17 +1,19 @@
 from random import randint
 
+POBLACION = 16
+
+
 def main():
 	# Aun estoy construllendo las funciones
 	poblacion = []
 
 	print("Y así iniciamos")
-	poblacion = crear_poblacion(16,10)
+	poblacion = crear_poblacion(5,10)
 
-	
-	for x in poblacion[0]:
+	for x in poblacion:
 		print("\n[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]")
-		print(poblacion[x])
-		print(str("Aptitud: ") + str(func_aptitud(poblacion[x])))
+		print(x)
+		print(str("Aptitud: ") + str(func_aptitud(x)))
 
 
 def crear_poblacion(medida, elementos):
@@ -78,5 +80,11 @@ def func_aptitud(individuo):
 			aptitud += 1
 		
 	return aptitud
+
+def seleccion(poblacion):
+
+	elegidos = []
+
+
 
 main()
