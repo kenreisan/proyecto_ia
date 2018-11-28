@@ -11,7 +11,7 @@ def main():
 	for x in poblacion[0]:
 		print("\n[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]")
 		print(poblacion[x])
-		print(str("Aptitud: ") + func_aptitud(poblacion[x]))
+		print(str("Aptitud: ") + str(func_aptitud(poblacion[x])))
 
 
 def crear_poblacion(medida, elementos):
