@@ -1,21 +1,20 @@
-from random import random
-from random import randrange
-from random import randint
-
-POBLACION = 16
-
+from random import random, randrange, randint, choice
 
 def main():
 	# Aun estoy construllendo las funciones
 	poblacion = []
+	nueva_gen = []
 
 	print("Y así iniciamos")
 	poblacion = crear_poblacion(5,10)
 
 	for x in poblacion:
-		print("\n[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]")
+		#print("\n[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]")
 		print(x)
 		print(str("Aptitud: ") + str(func_aptitud(x)))
+
+	print("\nSeleccion")
+	seleccion(poblacion)
 
 
 def crear_poblacion(medida, elementos):
@@ -85,7 +84,19 @@ def func_aptitud(individuo):
 
 def seleccion(poblacion):
 
-	elegidos = []
+	ruleta = []
+	boleto = 0
+
+	for individuo in poblacion:
+		boleto = func_aptitud(individuo)
+		for x in range(0,boleto + 1):
+			ruleta.append(individuo)
+
+	for objeto in ruleta:
+		print(objeto)
+	
+	print("\n")
+	print(choice(ruleta))
 
 def cruce(ind1, ind2):
 	'''Genera nuevo individuo a partir de otros dos.
