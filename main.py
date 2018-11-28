@@ -1,3 +1,5 @@
+from random import random
+from random import randrange
 from random import randint
 
 POBLACION = 16
@@ -85,6 +87,52 @@ def seleccion(poblacion):
 
 	elegidos = []
 
+def cruce(ind1, ind2):
+	'''Genera nuevo individuo a partir de otros dos.
 
+	Recibe:		Dos listas
+	Devuelve:	Una lista
 
+	Si se cumple la condición, se hace el cruce de
+	la 'madre' y el 'padre' en el punto de cruce y
+	se retorna el 'hijo', de lo contrario se retorna
+	la madre.
+
+	Hay condiciones adicionales para evitar que los
+	'cromosomas' iniciales sean siempre los de el
+	mismo padre.
+	'''
+
+	madre = []
+	padre = []
+	hijo = []
+
+	proba = random()
+	punto = randint(0,len(ind1))
+	
+	if proba > 0.65 :
+		madre = ind1
+		padre = ind2
+	else:
+		madre = ind2
+		padre = ind1
+
+	if punto == 0:	#Si el punto de cruce esta en los
+		punto += 1	#extremos, lo mueve una casilla.
+	elif punto == len(ind1):
+		punto -= 1
+
+	if proba > 0.3 :
+		for x in range(0,punto):
+			hijo.append(madre[x])
+		for y in range(punto,len(ind2)):
+			hijo.append(padre[y])
+
+		return hijo
+
+	else:
+
+		return madre
+
+#print(cruce([1,2,4,6],[3,5,7,8]))
 main()
