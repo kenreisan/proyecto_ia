@@ -9,17 +9,26 @@ def main():
 def crear_poblacion(medida, elementos):
 	
 	poblacion = []
+	pool = []
 	inicio = 0
+	primer = 1
 
 	for x in range(inicio,medida):
+		pool = llenar_pool(elementos)
 		poblacion.append([])
 		for y in range(inicio,elementos):
-			poblacion[x].append(randint(inicio,elementos))
+			poblacion[x].append(pool.pop(randint(inicio,len(pool)-1)))
 
 	for pob in range(inicio,10):
 		print(poblacion[pob])
 
+def llenar_pool(magnitud):
 
+	pool = []
+	for x in range(0,magnitud):
+		pool.append(x)
+
+	return pool
 
 
 
