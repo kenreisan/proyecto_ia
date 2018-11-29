@@ -3,9 +3,14 @@ from random import random, randrange, randint, choice
 def main():
 	# Aun estoy construllendo las funciones
 	tam_poblacion = 10
-	tam_tablero = 10
-	generaciones = 1000
+	tam_tablero = 15
+	generaciones = 5000
 	conteo = 1
+	aptitud_generacion = 0
+	aux = 0
+	mejor_generacion = 0
+
+	archivo = open('datos.txt','w')
 
 	poblacion = []
 	nueva_gen = []
@@ -22,15 +27,27 @@ def main():
 	while (generaciones != 0):	#aqui se eligen a las parejas para el cruce
 
 		conteo += 1
+		aptitud_generacion = 0
 		nueva_gen = vaciar_lista(nueva_gen)
 
 		for i in range(0,tam_poblacion):
 			#nueva_gen.append(seleccion(poblacion))
 			nueva_gen.append(cruce(seleccion(poblacion),seleccion(poblacion)))
 
-		print("\nGeneracion " + str(conteo))
+		dato0 = ("\nGeneracion " + str(conteo) + "\n")
+		print(dato0)
+		archivo.write(dato0)
 		for lista_nueva_gen in nueva_gen:
-			print(str(lista_nueva_gen) + " Aptitud = " + str(func_aptitud(lista_nueva_gen)))
+			aptitud_generacion = aptitud_generacion + func_aptitud(lista_nueva_gen)
+			dato = (str(lista_nueva_gen) + " Aptitud = " + str(func_aptitud(lista_nueva_gen)))
+			print(dato)
+			archivo.write(dato + "\n")
+
+		#print(aptitud_generacion)
+
+		if aptitud_generacion > aux:
+			mejor_generacion = conteo
+			aux = aptitud_generacion
 
 		#copiar nueva_gen a poblacion
 		for posicion in range(0,tam_poblacion):
@@ -39,7 +56,10 @@ def main():
 		#print(poblacion)
 
 		generaciones -= 1
-		hola = input("Presione enter para continuar")
+
+		#hola = input("Presione enter para continuar")
+
+	print("\nMejor Generacion: " + str(mejor_generacion))
 
 
 
