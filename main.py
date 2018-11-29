@@ -2,19 +2,45 @@ from random import random, randrange, randint, choice
 
 def main():
 	# Aun estoy construllendo las funciones
+	tam_poblacion = 10
+	tam_tablero = 10
+	generaciones = 1000
+	conteo = 1
+
 	poblacion = []
 	nueva_gen = []
 
-	print("Y así iniciamos")
-	poblacion = crear_poblacion(5,10)
+	print("\nY así iniciamos")
+	poblacion = crear_poblacion(tam_poblacion,tam_tablero)
 
 	for x in poblacion:
 		#print("\n[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]")
-		print(x)
-		print(str("Aptitud: ") + str(func_aptitud(x)))
+		print(str(x) + " " + str("Aptitud: ") + str(func_aptitud(x)))
 
-	print("\nSeleccion")
-	seleccion(poblacion)
+	#print("\nSeleccion")
+	
+	while (generaciones != 0):	#aqui se eligen a las parejas para el cruce
+
+		conteo += 1
+		nueva_gen = vaciar_lista(nueva_gen)
+
+		for i in range(0,tam_poblacion):
+			#nueva_gen.append(seleccion(poblacion))
+			nueva_gen.append(cruce(seleccion(poblacion),seleccion(poblacion)))
+
+		print("\nGeneracion " + str(conteo))
+		for lista_nueva_gen in nueva_gen:
+			print(str(lista_nueva_gen) + " Aptitud = " + str(func_aptitud(lista_nueva_gen)))
+
+		#copiar nueva_gen a poblacion
+		for posicion in range(0,tam_poblacion):
+			poblacion[posicion] = nueva_gen[posicion]
+
+		#print(poblacion)
+
+		generaciones -= 1
+		hola = input("Presione enter para continuar")
+
 
 
 def crear_poblacion(medida, elementos):
@@ -83,6 +109,17 @@ def func_aptitud(individuo):
 	return aptitud
 
 def seleccion(poblacion):
+	'''Elige un elemento de la poblacion por 'ruleta'.
+
+	Recibe:		una lista de listas (poblacion)
+	Devuelve:	una lista (individuo)
+
+	Se hace una 'rifa' donde los participantes de la
+	'poblacion' obtienen boletos dependiendo de su
+	'aptitud', a todos los participantes de les da un
+	boleto adicional, esto para garantizar que individuos
+	con una aptitud de cero tambien puedan participar.
+	'''
 
 	ruleta = []
 	boleto = 0
@@ -92,11 +129,12 @@ def seleccion(poblacion):
 		for x in range(0,boleto + 1):
 			ruleta.append(individuo)
 
-	for objeto in ruleta:
-		print(objeto)
+	#for objeto in ruleta:
+	#	print(objeto)
+
+	#print("\nGanador de la ruleta")
 	
-	print("\n")
-	print(choice(ruleta))
+	return choice(ruleta)
 
 def cruce(ind1, ind2):
 	'''Genera nuevo individuo a partir de otros dos.
@@ -139,11 +177,47 @@ def cruce(ind1, ind2):
 		for y in range(punto,len(ind2)):
 			hijo.append(padre[y])
 
+		hijo = mutacion(hijo)
 		return hijo
 
 	else:
-
+		madre = mutacion(madre)
 		return madre
 
-#print(cruce([1,2,4,6],[3,5,7,8]))
+def vaciar_lista(lista):
+
+	for elemento in range(0,len(lista)):
+		lista.pop()
+
+	#print(lista)
+	return lista
+
+
+def mutacion(individuo):	#Esta función intercambia 2 genes de posicion
+	
+	proba = random()
+	mutar1 = randint(0,len(individuo)-1)
+	mutar2 = randint(0,len(individuo)-1)
+	aux = 0
+
+	#print(proba)
+	#print(mutar1)
+	#print(mutar2)
+
+	'''Esta parte intercambia 2 valores
+	if proba < 0.2 and mutar1 != mutar2:
+		print("Hubo mutacion en: " + str(individuo))
+		aux = individuo[mutar1]
+		individuo[mutar1] = individuo[mutar2]
+		individuo[mutar2] = aux
+	'''
+
+	if proba < 0.05 :
+		print("Hubo mutacion en: " + str(individuo))
+		individuo[mutar1] = randint(0,len(individuo)-1)
+
+	return(individuo)
+
+#print(cruce([1,2,3,4],[5,6,7,8]))
+#mutacion([1,2,4,6])
 main()
